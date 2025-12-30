@@ -1,4 +1,7 @@
 # 🌬️ Multi-Agent Air Quality Monitoring System
+## 🚀 Live Demo
+
+**[👉 View Live Dashboard](https://poland-air-quality-monitoring.streamlit.app/)**
 
 A Multi-Agent System (MAS) for monitoring real-time air quality in Polish cities. This project demonstrates how multiple AI agents collaborate to collect, process, classify, and visualize air quality data.
 
