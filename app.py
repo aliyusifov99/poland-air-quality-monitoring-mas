@@ -120,27 +120,53 @@ def create_pollutant_chart(measurements_df):
 def create_aqi_gauge(city_data):
     """
     Create a gauge chart for AQI level.
+    
+    Args:
+        city_data: Series with city information
+        
+    Returns:
+        Plotly figure
     """
     level = city_data['overall_level']
+    category = city_data['overall_category']
+    color = city_data['overall_color']
     
     fig = go.Figure(go.Indicator(
-        mode="gauge+number",
+        mode="gauge+number+delta",
         value=level,
-        title={'text': city_data['city']},
+        number={'suffix': f" - {category}", 'font': {'size': 16, 'color': color}},
+        title={'text': city_data['city'], 'font': {'size': 18}},
         gauge={
-            'axis': {'range': [0, 5], 'tickvals': [0, 1, 2, 3, 4, 5]},
-            'bar': {'color': city_data['overall_color']},
+            'axis': {
+                'range': [0, 5], 
+                'tickvals': [0, 1, 2, 3, 4, 5],
+                'ticktext': ['0', '1', '2', '3', '4', '5'],
+                'tickfont': {'size': 12}
+            },
+            'bar': {'color': color, 'thickness': 0.75},
+            'bgcolor': 'rgba(0,0,0,0)',
+            'borderwidth': 0,
             'steps': [
-                {'range': [0, 1], 'color': '#00FF00'},
-                {'range': [1, 2], 'color': '#00CC00'},
-                {'range': [2, 3], 'color': '#FFFF00'},
-                {'range': [3, 4], 'color': '#FF9900'},
-                {'range': [4, 5], 'color': '#FF0000'},
+                {'range': [0, 1], 'color': '#00FF00'},   # Very Good - Bright Green
+                {'range': [1, 2], 'color': '#00CC00'},   # Good - Green
+                {'range': [2, 3], 'color': '#FFFF00'},   # Moderate - Yellow
+                {'range': [3, 4], 'color': '#FF9900'},   # Sufficient - Orange
+                {'range': [4, 5], 'color': '#FF0000'},   # Bad/Very Bad - Red
             ],
+            'threshold': {
+                'line': {'color': "black", 'width': 4},
+                'thickness': 0.8,
+                'value': level
+            }
         }
     ))
     
-    fig.update_layout(height=250)
+    fig.update_layout(
+        height=250,
+        margin=dict(l=20, r=20, t=50, b=20),
+        paper_bgcolor='rgba(0,0,0,0)',
+        font={'color': 'white'}
+    )
     
     return fig
 
