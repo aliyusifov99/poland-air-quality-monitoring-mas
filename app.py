@@ -4,13 +4,14 @@ Air Quality Monitoring System - Streamlit Dashboard
 This is the main UI for our Multi-Agent System.
 Run with: streamlit run app.py
 """
-
 import sys
 import os
+from pathlib import Path
 
 # Add project root to Python path
-project_root = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, project_root)
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root))
+
 
 import streamlit as st
 import plotly.express as px
